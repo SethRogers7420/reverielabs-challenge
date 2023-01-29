@@ -7,8 +7,10 @@ export type ChemblInfo = {
     median: number;
     standardDeviation: number;
   } | null;
-  selectedSmiles: string[];
+  selectedSmiles: SmileInfo[];
 };
+
+export type SmileInfo = { molecule_chembl_id: string; smiles: string };
 
 /** Returns a list of participants and their diagnoses. */
 export async function getChemblData(

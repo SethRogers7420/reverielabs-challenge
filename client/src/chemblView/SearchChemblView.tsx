@@ -1,9 +1,10 @@
+import "./SearchChemblView.scss";
 import { Box, Button, CircularProgress, TextField } from "@mui/material";
 import { FC, useState } from "react";
 import { useQuery } from "react-query";
 import { getChemblData } from "../api/getChemblData";
 import { ErrorPage } from "../errors/ErrorPage";
-import MoleculeStructure from "./molecule/MoleculeView";
+import { Smiles } from "./smiles/Smiles";
 
 export const SearchChemblView: FC = () => {
   const [chemblIdToSearch, setChemblIdToSearch] = useState("");
@@ -49,16 +50,11 @@ export const SearchChemblView: FC = () => {
         {data != null && (
           <div>
             <h2>Selected Smiles</h2>
-
-            {data.selectedSmiles.map((smiles) => (
-              <MoleculeStructure
-                id={smiles}
-                structure={smiles}
-                height={200}
-                width={200}
-                svgMode
-              />
-            ))}
+            <div className="searchChemblView-smilesList">
+              {data.selectedSmiles.map((smiles) => (
+                <Smiles key={smiles.molecule_chembl_id} smiles={smiles} />
+              ))}
+            </div>
           </div>
         )}
       </>

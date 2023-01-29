@@ -10,8 +10,10 @@ export type ChemblInfo = {
     median: number;
     standardDeviation: number;
   } | null;
-  selectedSmiles: string[];
+  selectedSmiles: SmileInfo[];
 };
+
+type SmileInfo = { molecule_chembl_id: string; smiles: string };
 
 export async function getCompoundFromChembl(
   chemblID: string,
@@ -97,15 +99,27 @@ function getIC50Values(chemblRows: ChemblRow[]): number[] {
   return ic50numbers;
 }
 
-function getSelectedSmiles(chemblRows: ChemblRow[]): string[] {
-  const smiles: string[] = [];
+function getSelectedSmiles(chemblRows: ChemblRow[]): SmileInfo[] {
+  const smiles: SmileInfo[] = [];
 
   for (const chemblRow of chemblRows) {
     if (isEmpty(chemblRow._source.canonical_smiles)) {
       continue;
     }
 
-    smiles.push(chemblRow._source.canonical_smiles);
+    if (
+      smiles.some(
+        (smile) =>
+          smile.molecule_chembl_id === chemblRow._source.molecule_chembl_id
+      )
+    ) {
+      continue;
+    }
+
+    smiles.push({
+      molecule_chembl_id: chemblRow._source.molecule_chembl_id,
+      smiles: chemblRow._source.canonical_smiles
+    });
 
     // Take the first 5 smiles.
     if (smiles.length >= 5) {
