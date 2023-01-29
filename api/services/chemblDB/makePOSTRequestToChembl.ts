@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export type ChemblRawHit = {
+export type ChemblRow = {
   _index: string;
   _type: string;
   _id: string;
@@ -57,7 +57,7 @@ export type ChemblRawResponse = {
   };
   hits: {
     max_score: number;
-    hits: ChemblRawHit[];
+    hits: ChemblRow[];
   };
 };
 
@@ -75,7 +75,7 @@ export async function makePOSTRequestToChembl(
 ): Promise<ChemblRawResponse> {
   let url = "https://www.ebi.ac.uk/chembl/elk/es/chembl_activity/_search";
 
-  const chemblResponse = await axios.post<ChemblRawResponse>(url, {
+  const requestBody = {
     size: 10000,
     from: 0,
     _source: [
@@ -135,9 +135,9 @@ export async function makePOSTRequestToChembl(
               analyze_wildcard: true,
               query: `target_chembl_id:${chemblID} AND standard_type:("IC50")${
                 previousMoleculeChemblId != null
-                  ? ` and molecule_chembl_id:(>${previousMoleculeChemblId})`
+                  ? ` AND molecule_chembl_id:(>${previousMoleculeChemblId})`
                   : ""
-              } `
+              }`
             }
           }
         ],
@@ -153,7 +153,9 @@ export async function makePOSTRequestToChembl(
         }
       }
     ]
-  });
+  };
+
+  const chemblResponse = await axios.post<ChemblRawResponse>(url, requestBody);
 
   return chemblResponse.data;
 }
