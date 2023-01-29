@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { getCompoundFromChembl } from "./services/chemblDB/getCompoundFromChembl";
+import path from "path";
 
 export const app = express();
 
@@ -19,4 +20,10 @@ app.get("/chembl/:id", async (req, res) => {
   const chemblInfo = await getCompoundFromChembl(chemblID);
 
   res.json(chemblInfo);
+});
+
+app.use(express.static(path.join(__dirname, "../client/build")));
+
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
