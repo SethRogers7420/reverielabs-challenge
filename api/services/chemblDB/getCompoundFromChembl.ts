@@ -3,7 +3,7 @@ import { ChemblRow, makePOSTRequestToChembl } from "./makePOSTRequestToChembl";
 import * as mathjs from "mathjs";
 
 export type ChemblInfo = {
-  ic50Info: {
+  ic50Aggregate: {
     mean: number;
     median: number;
     standardDeviation: number;
@@ -24,7 +24,7 @@ export async function getCompoundFromChembl(
   const ic50numbers = getIC50Values(chemblRows);
 
   return {
-    ic50Info:
+    ic50Aggregate:
       ic50numbers.length > 0
         ? {
             mean: mathjs.mean(ic50numbers),

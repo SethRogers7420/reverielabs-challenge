@@ -1,0 +1,21 @@
+# Git
+**/.git
+.gitignore
+
+# Editors
+.idea
+.editorconfig
+.vscode
+
+# Node
+.nvmrc
+node_modules
+npm-debug.log
+
+# Prettier
+.eslintrc
+.eslintcache
+.eslintignore
+
+# Markdown
+**/*.md
