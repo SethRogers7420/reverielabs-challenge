@@ -8,10 +8,7 @@
   "scripts": {
     "start": "dotenv -c -- nodemon --watch './**/*.ts' --watch 'tsconfig.json' --watch '.env' --exec 'node --inspect -r ts-node/register' ./index.ts",
     "build": "tsc && rimraf ./**/*.ts",
-    "typecheck": "tsc --noEmit",
-    "docker:build": "docker build . -t sethrogers7420/reverielabschallenge",
-    "docker:run": "docker run -p 7000:7000 sethrogers7420/reverielabschallenge",
-    "docker:ssh": "docker run -p 7000:7000 -it sethrogers7420/reverielabschallenge /bin/bash"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "axios": "^1.2.6",

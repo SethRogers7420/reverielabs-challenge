@@ -1,0 +1,1 @@
+docker build . -t sethrogers7420/reverielabschallenge

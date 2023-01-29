@@ -1,0 +1,1 @@
+docker run -p 7000:7000 -it sethrogers7420/reverielabschallenge /bin/bash
