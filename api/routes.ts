@@ -22,6 +22,9 @@ app.get("/chembl/:id", async (req, res) => {
   res.json(chemblInfo);
 });
 
+// Hacky serving of create-react-app in a node server
+// In a real app this should serve the `client/build` folder from a CDN like CloudFront or Azure CDN.
+// See: https://create-react-app.dev/docs/deployment/#serving-apps-with-client-side-routing
 app.use(express.static(path.join(__dirname, "../client/build")));
 
 app.get("/*", function (req, res) {
