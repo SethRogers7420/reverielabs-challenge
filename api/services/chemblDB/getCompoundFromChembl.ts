@@ -7,7 +7,7 @@ export type ChemblInfo = {
     mean: number;
     median: number;
     standardDeviation: number;
-  };
+  } | null;
 };
 
 export async function getCompoundFromChembl(
@@ -24,11 +24,14 @@ export async function getCompoundFromChembl(
   const ic50numbers = getIC50Values(chemblRows);
 
   return {
-    ic50Info: {
-      mean: mathjs.mean(ic50numbers),
-      median: mathjs.median(ic50numbers),
-      standardDeviation: mathjs.std(...ic50numbers)
-    }
+    ic50Info:
+      ic50numbers.length > 0
+        ? {
+            mean: mathjs.mean(ic50numbers),
+            median: mathjs.median(ic50numbers),
+            standardDeviation: mathjs.std(...ic50numbers)
+          }
+        : null
   };
 }
 

@@ -6,7 +6,7 @@
   "license": "",
   "private": true,
   "scripts": {
-    "start": "dotenv -c -- nodemon --watch './**/*.ts' --watch 'tsconfig.json' --exec 'node --inspect -r ts-node/register' ./index.ts",
+    "start": "dotenv -c -- nodemon --watch './**/*.ts' --watch 'tsconfig.json' --watch '.env' --exec 'node --inspect -r ts-node/register' ./index.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
