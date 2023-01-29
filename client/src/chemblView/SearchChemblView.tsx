@@ -11,10 +11,12 @@ import { ScatterMoleculeWeightAgainstIC50 } from "./scatterChart/ScatterMolecule
 export const SearchChemblView: FC = () => {
   const [chemblIdToSearch, setChemblIdToSearch] = useState("");
 
-  const { isLoading, error, data, refetch } = useQuery(
+  const { isFetching, error, data, refetch } = useQuery(
     ["chemblData", chemblIdToSearch],
     () => getChemblData(chemblIdToSearch),
     {
+      // Do not delete the data when re-running, wait for the query to finish
+      keepPreviousData: true,
       // Do not run when focusing the window
       refetchOnWindowFocus: false,
       // Do not run the query unless we call refetch
@@ -38,6 +40,11 @@ export const SearchChemblView: FC = () => {
             label="Enter Chembl ID"
             variant="outlined"
             onChange={(event) => setChemblIdToSearch(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                refetch();
+              }
+            }}
           />
 
           <Button variant="contained" color="primary" onClick={() => refetch()}>
@@ -45,11 +52,11 @@ export const SearchChemblView: FC = () => {
           </Button>
         </Box>
 
-        {isLoading && <CircularProgress />}
+        {isFetching && <CircularProgress />}
 
         {error && <ErrorPage error={error} />}
 
-        {data != null && (
+        {data != null && data.moleculeInfo.length > 0 && (
           <div>
             <Box
               sx={{
@@ -84,6 +91,10 @@ export const SearchChemblView: FC = () => {
               </div>
             </div>
           </div>
+        )}
+
+        {data != null && data.moleculeInfo.length === 0 && (
+          <div>No data found</div>
         )}
       </>
     </div>

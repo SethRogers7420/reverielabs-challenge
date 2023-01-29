@@ -3,11 +3,11 @@ import { FC, useMemo } from "react";
 import {
   BarChart,
   CartesianGrid,
-  Legend,
   XAxis,
   YAxis,
   Tooltip,
-  Bar
+  Bar,
+  Label
 } from "recharts";
 import { ChemblInfo } from "../../api/getChemblData";
 
@@ -55,14 +55,22 @@ export const IC50Histogram: FC<IC50HistogramProps> = (props) => {
         top: 5,
         right: 30,
         left: 20,
-        bottom: 5
+        bottom: 15
       }}
       barSize={20}
     >
-      <XAxis dataKey="name" scale="band" padding={{ left: 10, right: 10 }} />
-      <YAxis />
+      <XAxis dataKey="name" scale="band" padding={{ left: 10, right: 10 }}>
+        <Label value="IC50" offset={-10} position="insideBottom" />{" "}
+      </XAxis>
+      <YAxis
+        label={{
+          value: "compound count",
+          angle: -90,
+          position: "insideLeft",
+          textAnchor: "middle"
+        }}
+      />
       <Tooltip />
-      <Legend />
       <CartesianGrid strokeDasharray="3 3" />
       <Bar
         dataKey="compoundCount"

@@ -3,7 +3,6 @@ import { FC, useMemo } from "react";
 import {
   CartesianGrid,
   Label,
-  Legend,
   Scatter,
   ScatterChart,
   Tooltip,
@@ -56,7 +55,7 @@ export const ScatterMoleculeWeightAgainstIC50: FC<
     <ScatterChart
       width={900}
       height={450}
-      margin={{ top: 20, right: 20, bottom: 10, left: 10 }}
+      margin={{ top: 20, right: 20, bottom: 20, left: 10 }}
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="pchembl_value" name="IC50">
