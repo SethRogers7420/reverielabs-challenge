@@ -5,6 +5,8 @@ import { useQuery } from "react-query";
 import { getChemblData } from "../api/getChemblData";
 import { ErrorPage } from "../errors/ErrorPage";
 import { Smiles } from "./smiles/Smiles";
+import { IC50Histogram } from "./histogram/IC50Histogram";
+import { ScatterMoleculeWeightAgainstIC50 } from "./scatterChart/ScatterMoleculeWeightAgainstIC50";
 
 export const SearchChemblView: FC = () => {
   const [chemblIdToSearch, setChemblIdToSearch] = useState("");
@@ -49,11 +51,37 @@ export const SearchChemblView: FC = () => {
 
         {data != null && (
           <div>
-            <h2>Selected Smiles</h2>
-            <div className="searchChemblView-smilesList">
-              {data.selectedSmiles.map((smiles) => (
-                <Smiles key={smiles.molecule_chembl_id} smiles={smiles} />
-              ))}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <h2>Histogram</h2>
+              <IC50Histogram chemblInfo={data} />
+            </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <h2>Scatter Plot</h2>
+              <ScatterMoleculeWeightAgainstIC50 chemblInfo={data} />
+            </Box>
+
+            <div>
+              <h2>Selected Smiles</h2>
+              <div className="searchChemblView-smilesList">
+                {data.selectedSmiles.map((smiles) => (
+                  <Smiles key={smiles.molecule_chembl_id} smiles={smiles} />
+                ))}
+              </div>
             </div>
           </div>
         )}
