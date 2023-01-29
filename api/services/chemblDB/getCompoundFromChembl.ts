@@ -2,6 +2,8 @@ import { isEmpty } from "lodash";
 import { ChemblRow, makePOSTRequestToChembl } from "./makePOSTRequestToChembl";
 import * as mathjs from "mathjs";
 
+import { Cache } from "../memoryCache/cacheTypes";
+
 export type ChemblInfo = {
   ic50Aggregate: {
     mean: number;
@@ -11,10 +13,17 @@ export type ChemblInfo = {
 };
 
 export async function getCompoundFromChembl(
-  chemblID: string
+  chemblID: string,
+  cache: Cache<ChemblInfo>
 ): Promise<ChemblInfo> {
   if (isEmpty(chemblID)) {
     throw new Error("Expected a chembl ID to be passed in");
+  }
+
+  const cachedChemblRows = cache.getFromCache(chemblID);
+
+  if (cachedChemblRows != null) {
+    return cachedChemblRows;
   }
 
   // Get all our rows from chembl, this handles the pagination limits on the API.
@@ -23,7 +32,7 @@ export async function getCompoundFromChembl(
   // Get all the valid IC50 numbers, removing strings or nulls.
   const ic50numbers = getIC50Values(chemblRows);
 
-  return {
+  const chemblInfo: ChemblInfo = {
     ic50Aggregate:
       ic50numbers.length > 0
         ? {
@@ -33,6 +42,10 @@ export async function getCompoundFromChembl(
           }
         : null
   };
+
+  cache.addToCache(chemblID, chemblInfo);
+
+  return chemblInfo;
 }
 
 async function getAllChemblRows(chemblID: string): Promise<ChemblRow[]> {

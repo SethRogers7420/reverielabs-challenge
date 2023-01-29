@@ -1,7 +1,11 @@
 import express from "express";
 import cors from "cors";
-import { getCompoundFromChembl } from "./services/chemblDB/getCompoundFromChembl";
+import {
+  ChemblInfo,
+  getCompoundFromChembl
+} from "./services/chemblDB/getCompoundFromChembl";
 import path from "path";
+import { makeMemoryCache } from "./services/memoryCache/memoryCache";
 
 export const app = express();
 
@@ -14,10 +18,12 @@ app.use(
   })
 );
 
+const chemblCache = makeMemoryCache<ChemblInfo>();
+
 app.get("/chembl/:id", async (req, res) => {
   const chemblID = req.params.id;
 
-  const chemblInfo = await getCompoundFromChembl(chemblID);
+  const chemblInfo = await getCompoundFromChembl(chemblID, chemblCache);
 
   res.json(chemblInfo);
 });
