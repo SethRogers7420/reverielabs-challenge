@@ -3,6 +3,7 @@ import { FC, useState } from "react";
 import { useQuery } from "react-query";
 import { getChemblData } from "../api/getChemblData";
 import { ErrorPage } from "../errors/ErrorPage";
+import MoleculeStructure from "./molecule/MoleculeView";
 
 export const SearchChemblView: FC = () => {
   const [chemblIdToSearch, setChemblIdToSearch] = useState("");
@@ -44,6 +45,22 @@ export const SearchChemblView: FC = () => {
         {isLoading && <CircularProgress />}
 
         {error && <ErrorPage error={error} />}
+
+        {data != null && (
+          <div>
+            <h2>Selected Smiles</h2>
+
+            {data.selectedSmiles.map((smiles) => (
+              <MoleculeStructure
+                id={smiles}
+                structure={smiles}
+                height={200}
+                width={200}
+                svgMode
+              />
+            ))}
+          </div>
+        )}
       </>
     </div>
   );

@@ -10,6 +10,7 @@ export type ChemblInfo = {
     median: number;
     standardDeviation: number;
   } | null;
+  selectedSmiles: string[];
 };
 
 export async function getCompoundFromChembl(
@@ -40,7 +41,8 @@ export async function getCompoundFromChembl(
             median: mathjs.median(ic50numbers),
             standardDeviation: mathjs.std(...ic50numbers)
           }
-        : null
+        : null,
+    selectedSmiles: getSelectedSmiles(chemblRows)
   };
 
   cache.addToCache(chemblID, chemblInfo);
@@ -93,4 +95,23 @@ function getIC50Values(chemblRows: ChemblRow[]): number[] {
   }
 
   return ic50numbers;
+}
+
+function getSelectedSmiles(chemblRows: ChemblRow[]): string[] {
+  const smiles: string[] = [];
+
+  for (const chemblRow of chemblRows) {
+    if (isEmpty(chemblRow._source.canonical_smiles)) {
+      continue;
+    }
+
+    smiles.push(chemblRow._source.canonical_smiles);
+
+    // Take the first 5 smiles.
+    if (smiles.length >= 5) {
+      break;
+    }
+  }
+
+  return smiles;
 }
