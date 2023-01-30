@@ -5,11 +5,13 @@ import { Cache } from "./cacheTypes";
  *
  * In a real app this should be stored in a distributed cache like redis, or be calculated
  * in a normalized table and just queried directly.
+ *
+ * This cache is generic and different implementations can be swapped out.
  */
 export function makeMemoryCache<T extends {}>(): Cache<T> {
   const memoryMap: Map<string, T> = new Map();
 
-  function getFromCache(cacheKey: string): T | null {
+  async function getFromCache(cacheKey: string): Promise<T | null> {
     if (memoryMap.has(cacheKey)) {
       return memoryMap.get(cacheKey) ?? null;
     }
@@ -17,7 +19,7 @@ export function makeMemoryCache<T extends {}>(): Cache<T> {
     return null;
   }
 
-  function addToCache(cacheKey: string, data: T): void {
+  async function addToCache(cacheKey: string, data: T): Promise<void> {
     memoryMap.set(cacheKey, data);
   }
 

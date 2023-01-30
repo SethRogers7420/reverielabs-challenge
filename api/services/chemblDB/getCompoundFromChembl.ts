@@ -30,7 +30,7 @@ export async function getCompoundFromChembl(
     throw new Error("Expected a chembl ID to be passed in");
   }
 
-  const cachedChemblRows = cache.getFromCache(chemblID);
+  const cachedChemblRows = await cache.getFromCache(chemblID);
 
   if (cachedChemblRows != null) {
     return cachedChemblRows;
@@ -57,7 +57,7 @@ export async function getCompoundFromChembl(
     selectedSmiles: getSelectedSmiles(chemblRows)
   };
 
-  cache.addToCache(chemblID, chemblInfo);
+  await cache.addToCache(chemblID, chemblInfo);
 
   return chemblInfo;
 }

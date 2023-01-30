@@ -20,6 +20,11 @@ app.use(
 
 const chemblCache = makeMemoryCache<ChemblInfo>();
 
+/**
+ * Example: http://localhost:7000/chembl/CHEMBL203
+ *
+ * Sends meta-information about the molecules from Chembl.
+ */
 app.get("/chembl/:id", async (req, res) => {
   const chemblID = req.params.id;
 
