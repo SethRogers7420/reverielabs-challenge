@@ -1,5 +1,12 @@
 import "./SearchChemblView.scss";
-import { Box, Button, CircularProgress, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  FormLabel,
+  Grid,
+  TextField
+} from "@mui/material";
 import { FC, useState } from "react";
 import { useQuery } from "react-query";
 import { getChemblData } from "../api/getChemblData";
@@ -58,6 +65,36 @@ export const SearchChemblView: FC = () => {
 
         {data != null && data.moleculeInfo.length > 0 && (
           <div>
+            {data.ic50Aggregate != null && (
+              <div>
+                <h2>IC50 Information</h2>
+                <Grid container direction="row" gap={5} justifyContent="center">
+                  <Grid item xs={5} textAlign="right">
+                    <FormLabel>Mean</FormLabel>
+                  </Grid>
+                  <Grid item xs={5} textAlign="left">
+                    <span>{data.ic50Aggregate.mean.toFixed(2)}</span>
+                  </Grid>
+
+                  <Grid item xs={5} textAlign="right">
+                    <FormLabel>Median</FormLabel>
+                  </Grid>
+                  <Grid item xs={5} textAlign="left">
+                    <span>{data.ic50Aggregate.median}</span>
+                  </Grid>
+
+                  <Grid item xs={5} textAlign="right">
+                    <FormLabel>Standard Deviation</FormLabel>
+                  </Grid>
+                  <Grid item xs={5} textAlign="left">
+                    <span>
+                      {data.ic50Aggregate.standardDeviation.toFixed(2)}
+                    </span>
+                  </Grid>
+                </Grid>
+              </div>
+            )}
+
             <Box
               sx={{
                 display: "flex",

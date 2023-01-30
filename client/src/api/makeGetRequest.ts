@@ -3,7 +3,7 @@ type RelativeURL = `/${string}`;
 /**
  * Simple wrapper around fetch to make it easier to use GET requests and to provide better TypeScript support.
  *
- * @param relativeUrl - The URL relative to the API, in the format of `/participants`
+ * @param relativeUrl - The URL relative to the API, in the format of `/chembl/CHEMBL203`
  */
 export async function makeGetRequest<ReturnType>(
   relativeUrl: RelativeURL,

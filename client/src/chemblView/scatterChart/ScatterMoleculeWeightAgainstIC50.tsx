@@ -38,7 +38,7 @@ export const ScatterMoleculeWeightAgainstIC50: FC<
     for (const molecule of sortedMolecules) {
       if (molecule.full_mwt != null && molecule.pchembl_value != null) {
         // Only display some of our data as otherwise recharts lags out.
-        if (i % 20 === 0) {
+        if (sortedMolecules.length <= 200 || i % 20 === 0) {
           data.push({
             full_mwt: molecule.full_mwt,
             pchembl_value: molecule.pchembl_value

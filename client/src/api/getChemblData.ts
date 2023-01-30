@@ -19,7 +19,7 @@ export type MoleculeInfo = {
 
 export type SmileInfo = { molecule_chembl_id: string; smiles: string };
 
-/** Returns a list of participants and their diagnoses. */
+/** Returns meta information about the data from Chembl used to display aggregate information in the UI. */
 export async function getChemblData(
   chemblId: string
 ): Promise<ChemblInfo | null> {
