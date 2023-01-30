@@ -1,12 +1,31 @@
 # reverielabs-challenge
 
 - [reverielabs-challenge](#reverielabs-challenge)
+  - [Quick Start](#quick-start)
   - [Backend](#backend)
     - [Caching](#caching)
   - [Client](#client)
     - [Local Dev](#local-dev)
     - [Production-like](#production-like)
   - [Docker](#docker)
+
+## Quick Start
+
+Open two terminals at the root folder.
+
+```sh
+cd ./api;
+npm install;
+npm run start;
+```
+
+```sh
+cd ./client;
+npm install;
+npm run start;
+```
+
+Then view http://locahost:7007
 
 ## Backend
 
@@ -51,6 +70,8 @@ cd ./client;
 npm install;
 npm run start;
 ```
+
+Then view http://localhost:7007 with the API running.
 
 ### Production-like
 
