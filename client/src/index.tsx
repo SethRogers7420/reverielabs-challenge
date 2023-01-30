@@ -9,7 +9,7 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, StyledEngineProvider } from "@mui/material";
 
 /**
  * Initialize the react query client
@@ -26,7 +26,10 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <CssBaseline>
-          <App />
+          {/* Allow the scss styles to override material-ui's */}
+          <StyledEngineProvider injectFirst>
+            <App />
+          </StyledEngineProvider>
         </CssBaseline>
       </BrowserRouter>
     </QueryClientProvider>

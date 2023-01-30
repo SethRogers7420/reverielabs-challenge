@@ -2,6 +2,7 @@ import "./SearchChemblView.scss";
 import {
   Box,
   Button,
+  Card,
   CircularProgress,
   FormLabel,
   Grid,
@@ -34,9 +35,10 @@ export const SearchChemblView: FC = () => {
   return (
     <div>
       <>
-        <Box
+        <Card
           sx={{
-            width: 350,
+            width: 450,
+            padding: "20px 50px",
             margin: "auto",
             display: "flex",
             justifyContent: "space-between",
@@ -57,14 +59,14 @@ export const SearchChemblView: FC = () => {
           <Button variant="contained" color="primary" onClick={() => refetch()}>
             Search
           </Button>
-        </Box>
+        </Card>
 
         {isFetching && <CircularProgress />}
 
         {error && <ErrorPage error={error} />}
 
         {data != null && data.moleculeInfo.length > 0 && (
-          <div>
+          <Card sx={{ marginTop: "20px" }}>
             {data.ic50Aggregate != null && (
               <div>
                 <h2>IC50 Information</h2>
@@ -127,7 +129,7 @@ export const SearchChemblView: FC = () => {
                 ))}
               </div>
             </div>
-          </div>
+          </Card>
         )}
 
         {data != null && data.moleculeInfo.length === 0 && (
