@@ -70,7 +70,7 @@ export const SearchChemblView: FC = () => {
             {data.ic50Aggregate != null && (
               <div>
                 <h2>IC50 Information</h2>
-                <Grid container direction="row" gap={5} justifyContent="center">
+                <Grid container direction="row" gap={2} justifyContent="center">
                   <Grid item xs={5} textAlign="right">
                     <FormLabel>Mean</FormLabel>
                   </Grid>
