@@ -25,12 +25,16 @@ const chemblCache = makeMemoryCache<ChemblInfo>();
  *
  * Sends meta-information about the molecules from Chembl.
  */
-app.get("/chembl/:id", async (req, res) => {
+app.get("/chembl/:id", async (req, res, next) => {
   const chemblID = req.params.id;
 
-  const chemblInfo = await getCompoundFromChembl(chemblID, chemblCache);
+  try {
+    const chemblInfo = await getCompoundFromChembl(chemblID, chemblCache);
 
-  res.json(chemblInfo);
+    res.json(chemblInfo);
+  } catch (err) {
+    next(err);
+  }
 });
 
 // Hacky serving of create-react-app in a node server
